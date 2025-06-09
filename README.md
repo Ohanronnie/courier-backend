@@ -1,98 +1,327 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Logistics App Backend
 
-## Description
+## Overview
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a backend application for a Courier platform built with [NestJS](https://nestjs.com). It provides APIs for managing users, addresses, parcels, shipments, and authentication. The app integrates with an external API for shipment management and uses PostgreSQL as the database.
 
-## Project setup
+---
 
-```bash
-$ npm install
+## Table of Contents
+
+- Features
+- Technologies Used
+- Setup and Installation
+- Environment Variables
+- Authentication
+- API Endpoints
+  - Auth Routes
+  - User Routes
+  - Address Routes
+  - Parcel Routes
+  - Shipment Routes
+- Request and Response Samples
+- Testing
+- License
+
+---
+
+## Features
+
+- User registration and login with JWT-based authentication.
+- Address management with validation against external APIs.
+- Parcel creation and management.
+- Shipment creation and tracking.
+- Integration with external APIs for rates, addresses, and shipments.
+- Modular architecture with NestJS.
+
+---
+
+## Technologies Used
+
+- **Framework**: [NestJS](https://nestjs.com)
+- **Database**: PostgreSQL
+- **ORM**: TypeORM
+- **Authentication**: JWT
+- **Validation**: `class-validator`
+- **HTTP Client**: Axios
+- **Testing**: Jest, Supertest
+
+---
+
+## Setup and Installation
+
+### Prerequisites
+
+- Node.js (v16+)
+- PostgreSQL
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/logistics-app-backend.git
+   cd logistics-app-backend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Configure environment variables:
+   Create a .env file in the root directory and add the following variables:
+   ```env
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_USER=your_db_user
+   DB_PASSWORD=your_db_password
+   DB_NAME=logistics_db
+   JWT_SECRET=your_jwt_secret
+   TERMINAL_API_URL=https://api.example.com
+   TERMINAL_API_KEY=your_api_key
+   ```
+
+4. Run the application:
+   ```bash
+   npm run start:dev
+   ```
+
+5. Access the API at `http://localhost:3000`.
+
+---
+
+## Environment Variables
+
+| Variable           | Description                          | Example Value          |
+|--------------------|--------------------------------------|------------------------|
+| `DB_HOST`          | Database host                       | `localhost`            |
+| `DB_PORT`          | Database port                       | `5432`                 |
+| `DB_USER`          | Database username                   | `postgres`             |
+| `DB_PASSWORD`      | Database password                   | `password`             |
+| `DB_NAME`          | Database name                       | `logistics_db`         |
+| `JWT_SECRET`       | Secret key for JWT                  | `your_jwt_secret`      |
+| `TERMINAL_API_URL` | Base URL for the external API        | `https://api.example.com` |
+| `TERMINAL_API_KEY` | API key for the external API         | `your_api_key`         |
+
+---
+
+## Authentication
+
+This app uses **JWT (JSON Web Token)** for authentication. To access protected routes, include the token in the `Authorization` header as follows:
+
+```http
+Authorization: Bearer <your_token>
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## API Endpoints
 
-# watch mode
-$ npm run start:dev
+### Auth Routes
 
-# production mode
-$ npm run start:prod
+| Method | Endpoint       | Description              | Protected |
+|--------|----------------|--------------------------|-----------|
+| POST   | `/auth/register` | Register a new user      | No        |
+| POST   | `/auth/login`    | Login and get a token    | No        |
+
+### User Routes
+
+| Method | Endpoint       | Description              | Protected |
+|--------|----------------|--------------------------|-----------|
+| GET    | users       | Get all users            | Yes       |
+| GET    | `/users/:id`   | Get a user by ID         | Yes       |
+| PATCH  | `/users/:id`   | Update a user            | Yes       |
+| DELETE | `/users/:id`   | Delete a user            | Yes       |
+
+### Address Routes
+
+| Method | Endpoint         | Description                  | Protected |
+|--------|------------------|------------------------------|-----------|
+| POST   | `/address/create` | Create a new address         | Yes       |
+
+### Parcel Routes
+
+| Method | Endpoint               | Description                  | Protected |
+|--------|------------------------|------------------------------|-----------|
+| POST   | `/parcel/package/create` | Create a new packaging       | Yes       |
+| POST   | `/parcel/create`         | Create a new parcel          | Yes       |
+
+### Shipment Routes
+
+| Method | Endpoint         | Description                  | Protected |
+|--------|------------------|------------------------------|-----------|
+| POST   | `/shipments/rates` | Get shipment rates           | Yes       |
+| POST   | `/shipments/create` | Create a new shipment        | Yes       |
+
+---
+
+## Request and Response Samples
+
+### 1. **Register a User**
+
+**Endpoint**: `POST /auth/register`
+
+**Request Body**:
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phone": "+1234567890"
+}
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+**Response**:
+```json
+{
+  "statusCode": 201,
+  "message": "User created successfully",
+  "data": null
+}
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### 2. **Login a User**
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+**Endpoint**: `POST /auth/login`
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+**Request Body**:
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+**Response**:
+```json
+{
+  "statusCode": 200,
+  "message": "Login successful",
+  "data": {
+    "token": "your_jwt_token"
+  }
+}
+```
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+### 3. **Create an Address**
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+**Endpoint**: `POST /address/create`
 
-## Support
+**Request Body**:
+```json
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "addressLine1": "123 Main St",
+  "city": "New York",
+  "state": "NY",
+  "country": "US",
+  "postalCode": "10001",
+  "phone": "+1234567890",
+  "type": "sender"
+}
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**Response**:
+```json
+{
+  "statusCode": 201,
+  "message": "Address created successfully",
+  "data": {
+    "addressId": "addr_123"
+  }
+}
+```
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 4. **Create a Parcel**
+
+**Endpoint**: `POST /parcel/create`
+
+**Request Body**:
+```json
+{
+  "description": "Electronics",
+  "packagingId": "pkg_123",
+  "items": [
+    {
+      "description": "Laptop",
+      "name": "MacBook Pro",
+      "type": "parcel",
+      "currency": "USD",
+      "quantity": 1,
+      "weight": 2.5,
+      "value": 2000
+    }
+  ]
+}
+```
+
+**Response**:
+```json
+{
+  "statusCode": 201,
+  "message": "Parcel created successfully",
+  "data": "parcel_123"
+}
+```
+
+---
+
+### 5. **Create a Shipment**
+
+**Endpoint**: `POST /shipments/create`
+
+**Request Body**:
+```json
+{
+  "pickupAddress": "addr_123",
+  "deliveryAddress": "addr_456",
+  "parcelId": "parcel_123",
+  "shipmentPurpose": "commercial",
+  "shipmentType": "express"
+}
+```
+
+**Response**:
+```json
+{
+  "statusCode": 201,
+  "message": "Shipment created successfully",
+  "data": {
+    "shipmentId": "ship_123"
+  }
+}
+```
+
+---
+
+## Testing
+
+Run unit and e2e tests using Jest:
+
+```bash
+# Unit tests
+npm run test
+
+# End-to-end tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
+---
 
 ## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
