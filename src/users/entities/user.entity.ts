@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Address } from 'src/address/entities/address.entity';
+import { Shipment } from 'src/shipments/entities/shipments.entity';
 
 @Entity()
 export class User {
@@ -17,10 +18,10 @@ export class User {
   id: number;
 
   @Column()
-  firstName: string;
+  first_name: string;
 
   @Column()
-  lastName: string;
+  last_name: string;
 
   @Column({ unique: true })
   email: string;
@@ -31,15 +32,18 @@ export class User {
   @Column({ unique: true })
   phone: string;
 
-  @OneToOne(() => Address, (address) => address.user, {cascade: true})
+  @OneToOne(() => Address, (address) => address.user, { cascade: true })
   @JoinColumn()
   address: Address;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
+  @OneToMany(() => Shipment, (shipment) => shipment.user, { cascade: true })
+  shipments: Shipment[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  updatedAt: Date;
+  created_at: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  updated_at: Date;
 
   private hashPassword() {
     this.password = bcrypt.hashSync(this.password, 10);

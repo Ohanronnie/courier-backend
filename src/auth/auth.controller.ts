@@ -18,7 +18,6 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post('register')
-  
   async register(@Body() createUserDto: CreateUserDto): Promise<IResponse> {
     const response = await this.authService.createUser(createUserDto);
     if (response.statusCode !== 201) {

@@ -1,5 +1,11 @@
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Address {
@@ -7,19 +13,19 @@ export class Address {
   id: number;
 
   @Column()
-  firstName: string;
+  first_name: string;
 
   @Column()
-  lastName: string;
+  last_name: string;
 
   @Column()
   email: string;
 
   @Column()
-  addressLine1: string;
+  address_line1: string;
 
   @Column({ nullable: true })
-  addressLine2: string;
+  address_line2: string;
 
   @Column()
   phone: string;
@@ -34,10 +40,10 @@ export class Address {
   country: string;
 
   @Column()
-  postalCode: string;
+  postal_code: string;
 
   @Column()
-  addresssId: string;
+  address_id: string;
 
   @Column()
   type: 'sender' | 'receiver';

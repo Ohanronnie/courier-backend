@@ -10,13 +10,17 @@ import { axiosInstance } from 'src/utils/axios';
 import { UserType } from './address.controller';
 import { User } from 'src/users/entities/user.entity';
 
-
 @Injectable()
 export class AddressService {
   constructor(
-    @InjectRepository(Address) private readonly addressRepository: Repository<Address>,@InjectRepository(User) private readonly userRepository: Repository<User>
+    @InjectRepository(Address)
+    private readonly addressRepository: Repository<Address>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
-  async createAddress(address: AddressType, user: UserType): Promise<IResponse> {
+  async createAddress(
+    address: AddressType,
+    user: UserType,
+  ): Promise<IResponse> {
     try {
       console.log('Creating address:', address);
       const response = await axiosInstance.get('/countries');
@@ -79,21 +83,21 @@ export class AddressService {
         phone: address.phone,
       });
       const addressModel = this.addressRepository.create({
-        firstName: address.firstName,
-        lastName: address.lastName,
+        first_name: address.firstName,
+        last_name: address.lastName,
         email: address.email,
-        addressLine1: address.addressLine1,
-        addressLine2: address.addressLine2,
+        address_line1: address.addressLine1,
+        address_line2: address.addressLine2,
         phone: address.phone,
         city: address.city,
         state: address.state,
         country: countryCode,
-        postalCode: address.postalCode,
+        postal_code: address.postalCode,
         type: address.type,
-        addresssId: addressResponse.data.data.address_id,
+        address_id: addressResponse.data.data.address_id,
       });
       await this.addressRepository.save(addressModel);
-      
+
       const userModel = await this.userRepository.update(user.id, {
         address: addressModel,
       });
@@ -114,4 +118,3 @@ export class AddressService {
     }
   }
 }
-

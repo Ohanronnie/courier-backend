@@ -68,7 +68,7 @@ export type AddressType = {
   lastName: string;
   email: string;
   addressLine1: string;
-  addressLine2?: string; // Optional
+  addressLine2?: string;
   phone: string;
   city: string;
   state: string;

@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsNumber } from "class-validator";
+import { IsIn, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class PackagingDto {
   @IsNotEmpty()
@@ -17,14 +17,12 @@ export class PackagingDto {
   name: string;
 
   @IsNotEmpty()
-  @IsIn(["box", "envelope", "soft-packaging"])
-  type: "box" | "envelope" | "pallet";
+  @IsIn(['box', 'envelope', 'soft-packaging'])
+  type: 'box' | 'envelope' | 'pallet';
 
   @IsNotEmpty()
   @IsNumber()
   weight: number;
-
-
 }
 
 export type PackagingType = {
@@ -32,6 +30,6 @@ export type PackagingType = {
   width: number;
   length: number;
   name: string;
-  type: "box" | "envelope" | "pallet";
+  type: 'box' | 'envelope' | 'pallet';
   weight: number;
 };

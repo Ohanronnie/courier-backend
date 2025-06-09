@@ -9,7 +9,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 @Module({
   controllers: [AuthController],
   providers: [AuthService],
- exports: [AuthService, JwtModule, UsersModule],
+  exports: [AuthService, JwtModule, UsersModule],
   imports: [
     UsersModule,
     JwtModule.registerAsync({

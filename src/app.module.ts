@@ -9,7 +9,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 import { Address } from './address/entities/address.entity';
 import { AddressModule } from './address/address.module';
-import { PercelModule } from './percel/percel.module';
+import { ParcelModule } from './parcel/parcel.module';
+import { Parcel, ParcelItem } from './parcel/entities/parcel.entity';
+import { Packaging } from './parcel/entities/packaging.entity';
+import { Shipment } from './shipments/entities/shipments.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -25,7 +28,7 @@ import { PercelModule } from './percel/percel.module';
           database: configService.get<string>('DB_NAME'),
           synchronize: true,
           logging: true,
-          entities: [User, Address],
+          entities: [User, Address, Parcel, ParcelItem, Packaging, Shipment],
         };
       },
       inject: [ConfigService],
@@ -34,7 +37,7 @@ import { PercelModule } from './percel/percel.module';
     AuthModule,
     ShipmentsModule,
     AddressModule,
-    PercelModule,
+    ParcelModule,
   ],
   controllers: [AppController],
   providers: [AppService],

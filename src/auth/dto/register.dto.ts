@@ -3,18 +3,18 @@ import { IsPhoneNumber } from './phone.validator';
 
 export class CreateUserDto {
   @IsNotEmpty()
-  @IsEmail()
+  @IsEmail(undefined, {message: 'email not valid'})
   email: string;
   @IsNotEmpty()
-  @MinLength(6)
+  @MinLength(6, {message: 'password too short'})
   password: string;
 
   @IsNotEmpty()
-  @MinLength(2)
+  @MinLength(2, {message: 'firstName too short'})
   firstName: string;
 
   @IsNotEmpty()
-  @MinLength(2)
+  @MinLength(2, {message: 'lastName too short'})
   lastName: string;
 
   @IsNotEmpty()

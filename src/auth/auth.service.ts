@@ -28,7 +28,7 @@ export class AuthService {
       if (existingUser) {
         return {
           statusCode: HttpStatus.BAD_REQUEST,
-          message: 'Email already exists',
+          message: ['Email already exists'],
           error: 'Email already exists',
         };
       }
@@ -39,13 +39,13 @@ export class AuthService {
       if (existingPhone) {
         return {
           statusCode: HttpStatus.BAD_REQUEST,
-          message: 'Phone already exists',
+          message: ['Phone already exists'],
           error: 'Phone already exists',
         };
       }
       const newUser = this.userRepository.create({
-        firstName: user.firstName,
-        lastName: user.lastName,
+        first_name: user.firstName,
+        last_name: user.lastName,
         email: user.email,
         password: user.password,
         phone: user.phone,

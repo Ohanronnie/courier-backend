@@ -20,7 +20,7 @@ export class IsPhoneNumberConstraint implements ValidatorConstraintInterface {
   }
 
   defaultMessage() {
-    return 'Invalid phone number';
+    return 'phone number is not valid';
   }
 }
 
