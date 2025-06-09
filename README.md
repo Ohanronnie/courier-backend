@@ -1,7 +1,7 @@
 
 ---
 
-# Logistics App Backend
+# Courier App Backend
 
 ## Overview
 
@@ -63,7 +63,7 @@ This is a backend application for a Courier platform built with [NestJS](https:/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/logistics-app-backend.git
+   git clone https://github.com/ohanronnie/courier-backend.git
    cd logistics-app-backend
    ```
 
@@ -104,7 +104,7 @@ This is a backend application for a Courier platform built with [NestJS](https:/
 | `DB_PASSWORD`      | Database password                   | `password`             |
 | `DB_NAME`          | Database name                       | `logistics_db`         |
 | `JWT_SECRET`       | Secret key for JWT                  | `your_jwt_secret`      |
-| `TERMINAL_API_URL` | Base URL for the external API        | `https://api.example.com` |
+| `TERMINAL_API_URL` | Base URL for Terminal africa API        | `https://api.example.com` |
 | `TERMINAL_API_KEY` | API key for the external API         | `your_api_key`         |
 
 ---
