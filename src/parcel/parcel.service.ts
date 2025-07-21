@@ -32,6 +32,7 @@ export class ParcelService {
         size_unit: 'cm',
         weight_unit: 'kg',
       });
+      console.log(response.data)
       const user = await this.userRepository.findOneBy({ id: userId });
       if(!user) 
         return {
@@ -51,8 +52,8 @@ export class ParcelService {
         packaging_id: response.data.data.packaging_id,
         user
       });
-
-      await this.packagingRepository.save(packaging);
+      console.log(packaging)
+      await this.packagingRepository.insert(packaging);
       return {
         statusCode: response.status,
         message: 'Packaging created successfully',
@@ -92,6 +93,7 @@ export class ParcelService {
         })),
       };
       const response = await axiosInstance.post('/parcels', _data);
+      console.log(response)
       const parcelItem = this.parcelItemRepository.create(_data.items);
       await this.parcelItemRepository.save(parcelItem);
 
@@ -109,8 +111,9 @@ export class ParcelService {
         description: data.description,
         items: parcelItem,
         packaging,
+        parcelId: response.data.data.parcel_id
       });
-      await this.parcelRepository.save(parcel);
+      await this.parcelRepository.insert(parcel);
       return {
         statusCode: response.status,
         message: 'Parcel created successfully',

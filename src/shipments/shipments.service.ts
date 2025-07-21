@@ -26,7 +26,7 @@ export class ShipmentsService {
 
   async getRates(data: RatesType): Promise<IResponse> {
     try {
-      const response = await axiosInstance.get('/rates', {
+      const response = await axiosInstance.get('/rates/shipment', {
         params: {
           currency: data.currency,
           pickup_address: data.pickupAddress,

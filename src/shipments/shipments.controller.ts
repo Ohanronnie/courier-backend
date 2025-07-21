@@ -10,7 +10,7 @@ import { UserType } from 'src/address/address.controller';
 @UseGuards(JwtAuthGuard)
 export class ShipmentsController {
   constructor(private readonly shipmentsService: ShipmentsService) {}
-  @Get('rates')
+  @Post('rates')
   async getRates(@Body() data: RatesDto) {
     return this.shipmentsService.getRates(data);
   }

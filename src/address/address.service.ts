@@ -16,13 +16,82 @@ export class AddressService {
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-  ) {}
+  ) { }
+  async getCountries() {
+    try {
+      const response = await axiosInstance.get('/countries');
+      console.log('Countries response:', response.data.data);
+      const countries = response.data.data.map((country: any) => ({
+        name: country.name,
+        isoCode: country.isoCode,
+      }));
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Countries fetched successfully',
+        data: countries,
+      };
+    } catch (error: any) {
+      console.error('Error fetching countries:', error);
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'Internal server error',
+        error: 'Internal server error',
+      };
+    }
+  }
+  async getStates(countryCode: string) {
+    try {
+      const response = await axiosInstance.get('/states', {
+        params: { country_code: countryCode },
+      });
+      console.log('States response:', response.data.data);
+      const states = response.data.data.map((state: any) => ({
+        name: state.name,
+        isoCode: state.isoCode,
+      }));
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'States fetched successfully',
+        data: states,   
+      };
+    } catch (error: any) {
+      console.error('Error fetching states:', error);
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'Internal server error',
+        error: 'Internal server error',
+      };
+    } 
+  }
+  async getCities(stateCode: string, countryCode: string) {
+    try {
+      const response = await axiosInstance.get('/cities', {
+        params: { state_code: stateCode, country_code: countryCode },
+      });
+      console.log('Cities response:', response.data.data);
+      const cities = response.data.data.map((city: any) => ({
+        name: city.name,
+        isoCode: city.isoCode,
+      }));
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Cities fetched successfully',
+        data: cities,
+      };
+    } catch (error: any) {
+      console.error('Error fetching cities:', error);
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: 'Internal server error',
+        error: 'Internal server error',
+      };
+    }
+  }
   async createAddress(
     address: AddressType,
     user: UserType,
   ): Promise<IResponse> {
     try {
-      console.log('Creating address:', address);
       const response = await axiosInstance.get('/countries');
       const countries: string[] = response.data.data.map((c: any) =>
         c.name.toLowerCase(),
@@ -63,7 +132,7 @@ export class AddressService {
       const cities: string[] = cityResponse.data.data.map((c: any) =>
         c.name.toLowerCase(),
       );
-
+      console.log('Cities:', cities);
       if (!cities.includes(address.city.toLowerCase())) {
         return {
           statusCode: HttpStatus.BAD_REQUEST,

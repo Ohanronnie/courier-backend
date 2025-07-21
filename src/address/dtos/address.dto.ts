@@ -52,10 +52,6 @@ export class AddressDto {
   @IsString()
   postalCode: string;
 
-  @IsOptional()
-  @IsString()
-  addresssId?: string;
-
   @IsNotEmpty()
   @IsString()
   @IsIn(['sender', 'receiver'])
@@ -73,6 +69,5 @@ export type AddressType = {
   city: string;
   state: string;
   country: string; // Must be a 2-character uppercase code (e.g., US, GB)
-  postalCode: string;
-  addresssId?: string; // Optional
+  postalCode: string; // Optional
 };

@@ -1,6 +1,9 @@
 import { IsIn, IsNotEmpty, IsNumber } from 'class-validator';
+import { PrimaryGeneratedColumn } from 'typeorm';
 
 export class PackagingDto {
+  @PrimaryGeneratedColumn()
+  id: number;
   @IsNotEmpty()
   @IsNumber()
   height: number;
